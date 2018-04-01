@@ -27,7 +27,6 @@ export class TestComponent implements OnInit {
 
     this.testService.getSubjects().subscribe((res: any[]) => {
       this.subjects = res;
-      console.log(this.subjects);
     });
   }
 
