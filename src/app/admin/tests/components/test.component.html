@@ -1,0 +1,77 @@
+<div class="col-md-12">
+
+  <h2>Test list</h2>
+
+  <div class="row pull-right">
+    <button class="btn btn-primary" (click)="openCreateTest(content)">Створити</button>
+  </div>
+
+  <table class="table table-striped">
+    <thead>
+    <tr>
+      <th>Name</th>
+      <th>Tasks</th>
+      <th>Time for test</th>
+      <th>Attempts</th>
+      <th>Enable</th>
+    </tr>
+    </thead>
+
+    <tbody>
+      <tr *ngFor="let item of tests">
+        <td>{{item.test_name}}</td>
+        <td>{{item.tasks}}</td>
+        <td>{{item.time_for_test}}</td>
+        <td>{{item.attempts}}</td>
+        <td>{{item.enabled  === "1" ? "Так" : "Ні" }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<ng-template #content let-c="close" let-d="dismiss">
+  <div class="modal-header">
+    <h4 class="modal-title">Реєстрація нового тесту</h4>
+    <button type="button" class="close" aria-label="Close" (click)="d()" >
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form [formGroup]="testForm" >
+      <div class="form-group">
+        <label class="control-label" >Назва тесту</label>
+        <input type="text" formControlName="test_name" class="form-control" placeholder="назва тесту">
+      </div>
+      <div class="form-group">
+        <label class="control-label" >Завдань</label>
+        <input type="number" min="1" max="255" formControlName="tasks" class="form-control" >
+      </div>
+      <div class="form-group">
+        <label class="control-label" >Тривалість</label>
+        <input type="time" step="1" formControlName="time_for_test" class="form-control" >
+      </div>
+      <div class="form-group">
+        <label class="control-label" >Статус</label>
+        <select formControlName="enabled" class="form-control" >
+          <option [value]="0">Недоступно</option>
+          <option [value]="1">Доступно</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="control-label" >Спроб</label>
+        <input type="number" value="1" min="1" max="99" formControlName="attempts" class="form-control" >
+      </div>
+      <div class="form-group">
+        <label class="control-label" >Предмет</label>
+        <select formControlName="subject_id" class="form-control" >
+          <option *ngFor="let subject of subjects" [value]="subject.subject_id">{{subject.subject_name}}</option>
+        </select>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-primary" (click)="c('save');" >Зареєструвати</button>
+    <button class="btn btn-default" (click)="c('close')" >Відміна</button>
+  </div>
+</ng-template>
+
